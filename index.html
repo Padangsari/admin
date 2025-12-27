@@ -2164,10 +2164,7 @@ function preloadAllTabs() {
       const cacheKey = 'cache_' + tabType.toLowerCase();
       const cachedData = JSON.parse(localStorage.getItem(cacheKey) || '[]');
       
-      if (cachedData.length > 0) {
-        console.log(`💾 Loading ${tabType} from cache (${cachedData.length} items)`);
-        renderTableData(tbody, tabType, cachedData);
-      }
+      // JANGAN render dari cache dulu - tunggu data server untuk cegah duplikat
       
       try {
         console.log(`📥 Loading ${tabType} from:`, `${SCRIPT_URL}?action=getHistory&tabType=${tabType}`);
