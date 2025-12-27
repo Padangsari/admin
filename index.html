@@ -1313,7 +1313,12 @@
       initTabSwitching();
       initModalHandlers();
       initFormHandlers();
-      
+
+      // Preload semua tab di background
+setTimeout(() => {
+  preloadAllTabs();
+}, 1000);
+
       // Load admin data
       await loadAdminData();
       
@@ -1429,6 +1434,25 @@
       }
     }
     
+// Auto-load semua tab saat pertama buka (di background)
+function preloadAllTabs() {
+  console.log('🚀 Preloading all tabs...');
+  
+  // Load semua tab di background
+  loadHistory('KEGIATAN');
+  loadHistory('KAS');
+  loadHistory('IURAN');
+  loadHistory('ASET');
+  loadHistory('JADWAL');
+  
+  // Load data tambahan
+  loadSaldo();
+  loadTotalAset();
+  loadJadwalAktif();
+  
+  console.log('✅ All tabs preloaded');
+}
+
     // Modal Handlers
     function initModalHandlers() {
       // Open modals
