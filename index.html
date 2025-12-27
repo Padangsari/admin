@@ -1314,10 +1314,10 @@
       initModalHandlers();
       initFormHandlers();
 
-      // Preload semua tab di background
-setTimeout(() => {
-  preloadAllTabs();
-}, 1000);
+      // Preload semua tab di background (dimatikan dulu, bikin data terasa dobel / lompat-lompat)
+// setTimeout(() => {
+//   preloadAllTabs();
+// }, 1000);
 
       // Load admin data
       await loadAdminData();
@@ -1992,7 +1992,10 @@ function preloadAllTabs() {
       
       try {
         console.log('🔍 Loading data warga with tabType: WARGA');
-        const response = await fetch(`${SCRIPT_URL}?action=getHistory&tabType=WARGA`);
+        const response = await fetch(
+  `${SCRIPT_URL}?action=getHistory&tabType=WARGA&t=${Date.now()}`,
+  { cache: 'no-store' }
+);
         const result = await response.json();
         
         console.log('📊 Response from Apps Script:', result);
@@ -2044,7 +2047,10 @@ function preloadAllTabs() {
     async function loadSummaryCards() {
       try {
         // Load Total KK dan Jiwa
-        const responseSummary = await fetch(`${SCRIPT_URL}?action=getWargaSummary`);
+        const responseSummary = await fetch(
+  `${SCRIPT_URL}?action=getWargaSummary&t=${Date.now()}`,
+  { cache: 'no-store' }
+);
         const resultSummary = await responseSummary.json();
         
         if (resultSummary.success) {
@@ -2053,7 +2059,10 @@ function preloadAllTabs() {
         }
         
         // Load Total Iuran
-        const responseIuran = await fetch(`${SCRIPT_URL}?action=getTotalIuran`);
+        const responseIuran = await fetch(
+  `${SCRIPT_URL}?action=getTotalIuran&t=${Date.now()}`,
+  { cache: 'no-store' }
+);
         const resultIuran = await responseIuran.json();
         
         if (resultIuran.success) {
@@ -2081,7 +2090,10 @@ function preloadAllTabs() {
     async function loadTotalAset() {
       try {
         // Ambil semua data aset dari tabel
-        const response = await fetch(`${SCRIPT_URL}?action=getHistory&tabType=ASET`);
+        const response = await fetch(
+  `${SCRIPT_URL}?action=getHistory&tabType=ASET&t=${Date.now()}`,
+  { cache: 'no-store' }
+);
         const result = await response.json();
         
         if (result.success && result.data && result.data.length > 0) {
@@ -2115,7 +2127,10 @@ function preloadAllTabs() {
     
     async function loadSaldo() {
       try {
-        const response = await fetch(`${SCRIPT_URL}?action=getSaldo`);
+        const response = await fetch(
+  `${SCRIPT_URL}?action=getSaldo&t=${Date.now()}`,
+  { cache: 'no-store' }
+);
         const result = await response.json();
         
         if (result.success) {
@@ -2129,7 +2144,10 @@ function preloadAllTabs() {
     
     async function loadJadwalAktif() {
       try {
-        const response = await fetch(`${SCRIPT_URL}?action=getHistory&tabType=JADWAL`);
+        const response = await fetch(
+  `${SCRIPT_URL}?action=getHistory&tabType=JADWAL&t=${Date.now()}`,
+  { cache: 'no-store' }
+);
         const result = await response.json();
         
         if (result.success && result.data && result.data.length > 0) {
@@ -2167,8 +2185,14 @@ function preloadAllTabs() {
       // JANGAN render dari cache dulu - tunggu data server untuk cegah duplikat
       
       try {
-        console.log(`📥 Loading ${tabType} from:`, `${SCRIPT_URL}?action=getHistory&tabType=${tabType}`);
-        const response = await fetch(`${SCRIPT_URL}?action=getHistory&tabType=${tabType}`);
+        console.log(
+  `📥 Loading ${tabType} from:`,
+  `${SCRIPT_URL}?action=getHistory&tabType=${tabType}&t=${Date.now()}`
+);
+const response = await fetch(
+  `${SCRIPT_URL}?action=getHistory&tabType=${tabType}&t=${Date.now()}`,
+  { cache: 'no-store' }
+);
         const result = await response.json();
         
         console.log(`📊 ${tabType} Response:`, result);
@@ -2410,7 +2434,10 @@ function preloadAllTabs() {
       
       try {
         // Gunakan tabType WARGA yang sesuai dengan Apps Script
-        const response = await fetch(`${SCRIPT_URL}?action=getHistory&tabType=WARGA`);
+        const response = await fetch(
+  `${SCRIPT_URL}?action=getHistory&tabType=WARGA&t=${Date.now()}`,
+  { cache: 'no-store' }
+);
         const result = await response.json();
         
         console.log('Load warga response:', result);
@@ -2421,7 +2448,10 @@ function preloadAllTabs() {
           console.log('Sample warga data:', wargaListFull[0]);
           
           // Load pembayaran data (CRITICAL: Must complete before user interaction)
-          const responsePembayaran = await fetch(`${SCRIPT_URL}?action=getAllPembayaranRekap`);
+          const responsePembayaran = await fetch(
+  `${SCRIPT_URL}?action=getAllPembayaranRekap&t=${Date.now()}`,
+  { cache: 'no-store' }
+);
           const resultPembayaran = await responsePembayaran.json();
           
           if (resultPembayaran.success) {
