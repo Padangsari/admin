@@ -2152,11 +2152,14 @@
         
         console.log(`📊 ${tabType} Response:`, result);
         
-        if (result.success && result.data && result.data.length > 0) {
-          console.log(`✅ ${tabType} loaded:`, result.data.length, 'rows');
+        // JADWAL pakai result.history, yang lain pakai result.data
+        const dataArray = tabType === 'JADWAL' ? result.history : result.data;
+        
+        if (result.success && dataArray && dataArray.length > 0) {
+          console.log(`✅ ${tabType} loaded:`, dataArray.length, 'rows');
           
           // Reverse SEMUA data dari server agar terbaru di atas (termasuk KAS)
-          const serverData = result.data.reverse();
+          const serverData = dataArray.reverse();
           
           // Merge dengan cache: data dari server + data cache yang belum tersinkron
           const mergedData = [...cachedData, ...serverData];
