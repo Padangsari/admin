@@ -701,7 +701,7 @@
         <div class="card p-4">
          <div class="flex items-center gap-3">
           <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-xl">
-           ���
+           📈
           </div>
           <div>
            <p class="text-gray-600 text-xs">Persentase Iuran</p>
@@ -1146,10 +1146,10 @@
             
             if (admin.username) {
               adminData.push(admin);
-              console.log('���� Admin saved:', admin);
+              console.log('💾 Admin saved:', admin);
             }
           } else {
-            console.warn(`⚠�� Line ${i+1} has only ${cols.length} columns, expected at least 5`);
+            console.warn(`⚠️ Line ${i+1} has only ${cols.length} columns, expected at least 5`);
           }
         }
         
@@ -1257,7 +1257,7 @@
             button.style.display = 'inline-block'; // Force display
             button.style.opacity = '1';
             button.style.cursor = 'pointer';
-            console.log(`��� Button ${buttonId} shown`);
+            console.log(`✅ Button ${buttonId} shown`);
           } else {
             button.classList.remove('hidden'); // Tetap tampil tapi disabled
             button.disabled = true;
@@ -2324,6 +2324,11 @@
             // Ambil judul kegiatan dari field yang benar
             const judulKegiatan = item.judulKegiatan || item.namaKegiatan || '-';
             
+            // Cek permission admin untuk dropdown status
+            const hasJadwalPermission = currentAdmin && currentAdmin.permissions && currentAdmin.permissions.includes('jadwal');
+            const dropdownDisabled = hasJadwalPermission ? '' : 'disabled';
+            const dropdownStyle = hasJadwalPermission ? 'cursor: pointer;' : 'opacity: 0.5; cursor: not-allowed;';
+            
             return `
               <tr class="border-b border-gray-200 hover:bg-gray-50">
                 <td class="px-3 py-2 align-top">${item.tanggal || '-'}</td>
@@ -2333,7 +2338,7 @@
                 <td class="px-3 py-2 align-top">${item.penanggungJawab || '-'}</td>
                 <td class="px-3 py-2 align-top" style="white-space: normal; max-width: 250px;">${item.keterangan || '-'}</td>
                 <td class="px-3 py-2 align-top">
-                  <select class="status-dropdown status-${statusValue.toLowerCase()}" data-row="${item.rowIndex}" onchange="updateStatus(this, ${item.rowIndex}, '${statusValue}')">
+                  <select class="status-dropdown status-${statusValue.toLowerCase()}" data-row="${item.rowIndex}" onchange="updateStatus(this, ${item.rowIndex}, '${statusValue}')" ${dropdownDisabled} style="${dropdownStyle}">
                     <option value="AKTIF" ${statusValue === 'AKTIF' ? 'selected' : ''}>Aktif</option>
                     <option value="BATAL" ${statusValue === 'BATAL' ? 'selected' : ''}>Batal</option>
                     <option value="SELESAI" ${statusValue === 'SELESAI' ? 'selected' : ''}>Selesai</option>
@@ -2519,7 +2524,7 @@
             // Tidak ada warga terpilih - warna per tahun, disabled
             checkbox.disabled = true;
             label.classList.add('month-belum');
-            console.log(`�� Bulan ${colIndex} NO WARGA (disabled)`);
+            console.log(`⚪ Bulan ${colIndex} NO WARGA (disabled)`);
           }
         });
         
@@ -2651,5 +2656,5 @@
       }
     }
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b449d33a3c2e9cd',t:'MTc2Njc5NDQyOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b44b4df02afe9cd',t:'MTc2Njc5NTM5Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
