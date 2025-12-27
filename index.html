@@ -2218,6 +2218,9 @@ function preloadAllTabs() {
     }
     
     function renderTableData(tbody, tabType, data) {
+      // CLEAR TABEL DULU untuk cegah duplikat
+      tbody.innerHTML = '';
+      
       tbody.innerHTML = data.map(item => {
         switch(tabType) {
           case 'KEGIATAN':
