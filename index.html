@@ -1839,17 +1839,17 @@ loadHistory('KAS');
         timestamp: timestamp
       };
       
-      // Simpan ke cache/memory lokal dulu
-      const cacheKey = 'cache_iuran';
-      let cachedData = JSON.parse(localStorage.getItem(cacheKey) || '[]');
-      cachedData.unshift(data); // Tambah di awal array (terbaru di atas)
-      localStorage.setItem(cacheKey, JSON.stringify(cachedData));
-      
-      // Update tabel langsung dari cache
-      updateTableFromCache('IURAN');
-      
-      // Update summary cards
-      loadSummaryCards();
+      // (Matikan cache lokal iuran, biar ikut data Sheets saja)
+// const cacheKey = 'cache_iuran';
+// let cachedData = JSON.parse(localStorage.getItem(cacheKey) || '[]');
+// cachedData.unshift(data);
+// localStorage.setItem(cacheKey, JSON.stringify(cachedData));
+
+// Setelah submit, reload dari server
+loadHistory('IURAN');
+
+// Update summary cards
+loadSummaryCards();
       
       // Tutup modal dan tampilkan sukses
       closeModal('modal-iuran');
@@ -1901,17 +1901,17 @@ loadHistory('KAS');
         timestamp: timestamp
       };
       
-      // Simpan ke cache/memory lokal dulu
-      const cacheKey = 'cache_aset';
-      let cachedData = JSON.parse(localStorage.getItem(cacheKey) || '[]');
-      cachedData.unshift(data); // Tambah di awal array (terbaru di atas)
-      localStorage.setItem(cacheKey, JSON.stringify(cachedData));
-      
-      // Update tabel langsung dari cache
-      updateTableFromCache('ASET');
-      
-      // Update total aset
-      loadTotalAset();
+      // (Matikan cache lokal aset, biar ikut data Sheets saja)
+// const cacheKey = 'cache_aset';
+// let cachedData = JSON.parse(localStorage.getItem(cacheKey) || '[]');
+// cachedData.unshift(data);
+// localStorage.setItem(cacheKey, JSON.stringify(cachedData));
+
+// Setelah submit, reload dari server
+loadHistory('ASET');
+
+// Update total aset
+loadTotalAset();
       
       // Tutup modal dan tampilkan sukses
       closeModal('modal-aset');
@@ -1952,14 +1952,14 @@ loadHistory('KAS');
         status: formData.get('status')
       };
       
-      // Simpan ke cache/memory lokal dulu (seperti tab lain)
-      const cacheKey = 'cache_jadwal';
-      let cachedData = JSON.parse(localStorage.getItem(cacheKey) || '[]');
-      cachedData.unshift(data); // Tambah di awal array (terbaru di atas)
-      localStorage.setItem(cacheKey, JSON.stringify(cachedData));
-      
-      // Update tabel langsung dari cache
-      updateTableFromCache('JADWAL');
+      // (Matikan cache lokal jadwal, biar ikut data Sheets saja)
+// const cacheKey = 'cache_jadwal';
+// let cachedData = JSON.parse(localStorage.getItem(cacheKey) || '[]');
+// cachedData.unshift(data);
+// localStorage.setItem(cacheKey, JSON.stringify(cachedData));
+
+// Setelah submit, reload dari server
+loadHistory('JADWAL');
       
       // Update card Jadwal Aktif
       loadJadwalAktif();
