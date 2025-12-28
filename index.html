@@ -1696,14 +1696,14 @@ function preloadAllTabs() {
         timestamp: timestamp
       };
       
-      // Simpan ke cache/memory lokal dulu
-      const cacheKey = 'cache_kegiatan';
-      let cachedData = JSON.parse(localStorage.getItem(cacheKey) || '[]');
-      cachedData.unshift(data); // Tambah di awal array (terbaru di atas)
-      localStorage.setItem(cacheKey, JSON.stringify(cachedData));
-      
-      // Update tabel langsung dari cache
-      updateTableFromCache('KEGIATAN');
+      // (Matikan cache lokal kegiatan, biar ikut data Sheets saja)
+// const cacheKey = 'cache_kegiatan';
+// let cachedData = JSON.parse(localStorage.getItem(cacheKey) || '[]');
+// cachedData.unshift(data);
+// localStorage.setItem(cacheKey, JSON.stringify(cachedData));
+
+// Setelah submit, reload dari server
+loadHistory('KEGIATAN');
       
       // Tutup modal dan tampilkan sukses
       closeModal('modal-kegiatan');
@@ -1762,14 +1762,14 @@ function preloadAllTabs() {
         data.danaKas = 0;
       }
       
-      // Simpan ke cache/memory lokal dulu
-      const cacheKey = 'cache_kas';
-      let cachedData = JSON.parse(localStorage.getItem(cacheKey) || '[]');
-      cachedData.unshift(data); // Tambah di awal array (terbaru di atas)
-      localStorage.setItem(cacheKey, JSON.stringify(cachedData));
-      
-      // Update tabel langsung dari cache
-      updateTableFromCache('KAS');
+      // (Matikan cache lokal kas, biar ikut data Sheets saja)
+// const cacheKey = 'cache_kas';
+// let cachedData = JSON.parse(localStorage.getItem(cacheKey) || '[]');
+// cachedData.unshift(data);
+// localStorage.setItem(cacheKey, JSON.stringify(cachedData));
+
+// Setelah submit, reload dari server
+loadHistory('KAS');
       
       // Tutup modal dan tampilkan sukses
       closeModal('modal-kas');
