@@ -2168,78 +2168,56 @@ loadHistory('JADWAL');
     }
     
     async function loadHistory(tabType) {
-      const tableMap = {
-        'KEGIATAN': 'table-kegiatan',
-        'KAS': 'table-kas',
-        'IURAN': 'table-iuran',
-        'ASET': 'table-aset',
-        'JADWAL': 'table-jadwal'
+  const tableMap = {
+    'KEGIATAN': 'table-kegiatan',
+    'KAS': 'table-kas',
+    'IURAN': 'table-iuran',
+    'ASET': 'table-aset',
+    'JADWAL': 'table-jadwal'
+  };
+  
+  const tbody = document.getElementById(tableMap[tabType]);
+  
+  try {
+    console.log(`📥 Loading ${tabType} from:`, `${SCRIPT_URL}?action=getHistory&tabType=${tabType}&t=${Date.now()}`);
+    const response = await fetch(
+      `${SCRIPT_URL}?action=getHistory&tabType=${tabType}&t=${Date.now()}`,
+      { cache: 'no-store' }
+    );
+    const result = await response.json();
+    
+    console.log(`📊 ${tabType} Response:`, result);
+    
+    // JADWAL pakai result.history, yang lain pakai result.data
+    const dataArray = tabType === 'JADWAL' ? result.history : result.data;
+    
+    if (result.success && dataArray && dataArray.length > 0) {
+      console.log(`✅ ${tabType} loaded: ${dataArray.length} rows`);
+      
+      // Reverse SEMUA data dari server agar terbaru di atas
+      const serverData = dataArray.reverse();
+      
+      // RENDER LANGSUNG dari server, TANPA merge cache atau deduplikasi
+      renderTableData(tbody, tabType, serverData);
+      
+    } else {
+      console.warn(`No ${tabType} data found`);
+      const sheetNames = {
+        'KEGIATAN': 'KEGIATAN WARGA',
+        'KAS': 'KAS WARGA',
+        'IURAN': 'Log_Pembayaran',
+        'ASET': 'DATA ASET',
+        'JADWAL': 'JADWAL'
       };
-      
-      const tbody = document.getElementById(tableMap[tabType]);
-      
-      // Coba load dari cache dulu untuk tampilan cepat
-      const cacheKey = 'cache_' + tabType.toLowerCase();
-      const cachedData = JSON.parse(localStorage.getItem(cacheKey) || '[]');
-      
-      // JANGAN render dari cache dulu - tunggu data server untuk cegah duplikat
-      
-      try {
-        console.log(
-  `📥 Loading ${tabType} from:`,
-  `${SCRIPT_URL}?action=getHistory&tabType=${tabType}&t=${Date.now()}`
-);
-const response = await fetch(
-  `${SCRIPT_URL}?action=getHistory&tabType=${tabType}&t=${Date.now()}`,
-  { cache: 'no-store' }
-);
-        const result = await response.json();
-        
-        console.log(`📊 ${tabType} Response:`, result);
-        
-        // JADWAL pakai result.history, yang lain pakai result.data
-        const dataArray = tabType === 'JADWAL' ? result.history : result.data;
-        
-        if (result.success && dataArray && dataArray.length > 0) {
-          console.log(`✅ ${tabType} loaded:`, dataArray.length, 'rows');
-          
-          // Reverse SEMUA data dari server agar terbaru di atas (termasuk KAS)
-          const serverData = dataArray.reverse();
-          
-          // Merge dengan cache: data dari server + data cache yang belum tersinkron
-          const mergedData = [...cachedData, ...serverData];
-          
-          // Hapus duplikat berdasarkan timestamp
-          const uniqueData = Array.from(new Map(mergedData.map(item => [item.timestamp, item])).values());
-          
-          // Update cache dengan data terbaru
-          localStorage.setItem(cacheKey, JSON.stringify(uniqueData.slice(0, 50))); // Simpan max 50 data terbaru
-          
-          renderTableData(tbody, tabType, uniqueData);
-        } else if (cachedData.length === 0) {
-          console.warn(`⚠️ No ${tabType} data found`);
-          const sheetNames = {
-            'KEGIATAN': 'KEGIATAN WARGA',
-            'KAS': 'KAS WARGA',
-            'IURAN': 'Log_Pembayaran',
-            'ASET': 'DATA ASET',
-            'JADWAL': 'JADWAL'
-          };
-          const colspan = tabType === 'KEGIATAN' ? 6 : tabType === 'KAS' ? 7 : tabType === 'IURAN' ? 7 : tabType === 'ASET' ? 9 : 7;
-          tbody.innerHTML = `<tr><td colspan="${colspan}" class="px-6 py-8 text-center text-gray-500">Belum ada data<br><small>Pastikan nama sheet di Apps Script adalah "${sheetNames[tabType]}" (tabType: ${tabType})</small></td></tr>`;
-        }
-      } catch (error) {
-        console.error(`❌ Error loading ${tabType}:`, error);
-        
-        // Jika ada cache, tetap tampilkan
-        if (cachedData.length > 0) {
-          showToast('Menampilkan data dari cache lokal', 'success');
-        } else {
-          const colspan = tabType === 'KEGIATAN' ? 6 : tabType === 'KAS' ? 7 : tabType === 'IURAN' ? 7 : tabType === 'ASET' ? 9 : 7;
-          tbody.innerHTML = `<tr><td colspan="${colspan}" class="px-6 py-8 text-center text-red-500">Error: ${error.message}<br><small>Cek console untuk detail</small></td></tr>`;
-        }
-      }
+      const colspan = tabType === 'KEGIATAN' ? 6 : (tabType === 'KAS' ? 7 : (tabType === 'IURAN' ? 7 : (tabType === 'ASET' ? 9 : 8)));
+      tbody.innerHTML = `<tr><td colspan="${colspan}" class="px-6 py-8 text-center text-gray-500">Belum ada data<br><small>Pastikan nama sheet di Apps Script adalah: <strong>${sheetNames[tabType]}</strong> (tabType: ${tabType})</small></td></tr>`;
     }
+  } catch (error) {
+    console.error(`Error loading ${tabType}:`, error);
+    const colspan = tabType === 'KEGIATAN' ? 6 : (tabType === 'KAS' ? 7 : (tabType === 'IURAN' ? 7 : (tabType === 'ASET' ? 9 : 8)));
+    tbody.innerHTML = `<tr><td colspan="${colspan}" class="px-6 py-8 text-center text-red-500">Error: ${error.message}<br><small>Cek console untuk detail</small></td></tr>`;
+  }
+}
     
     function renderTableData(tbody, tabType, data) {
       // CLEAR TABEL DULU untuk cegah duplikat
