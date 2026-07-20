@@ -711,6 +711,23 @@
         </div>
        </div>
       </div>
+      <!-- Toolbar Filter & Cetak Iuran (selalu tampil, tanpa login) -->
+      <div class="card p-4 mb-4">
+       <div class="flex flex-col md:flex-row md:items-center gap-3">
+        <div class="flex-1">
+         <label class="block text-xs font-semibold text-gray-600 mb-1">Filter Nama Warga</label>
+         <div class="flex gap-2">
+          <input type="text" id="filter-nama-iuran" list="datalist-nama-iuran" placeholder="Ketik atau pilih nama warga..." class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm" autocomplete="off">
+          <datalist id="datalist-nama-iuran"></datalist>
+          <button type="button" id="btn-reset-filter-iuran" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-2 rounded-lg text-sm font-semibold" title="Reset filter">✖ Reset</button>
+         </div>
+         <p id="info-filter-iuran" class="text-xs text-gray-500 mt-1">Menampilkan seluruh data pembayaran.</p>
+        </div>
+        <div>
+         <button type="button" id="btn-cetak-iuran" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow"> 🖨️ Cetak Laporan PDF </button>
+        </div>
+       </div>
+      </div>
       <div class="card overflow-hidden">
        <div class="p-6 border-b border-gray-200">
         <h2 class="text-xl font-bold text-gray-800">Riwayat Pembayaran Iuran</h2>
@@ -2197,8 +2214,19 @@ loadHistory('JADWAL');
       // Reverse SEMUA data dari server agar terbaru di atas
       const serverData = dataArray.reverse();
       
-      // RENDER LANGSUNG dari server, TANPA merge cache atau deduplikasi
-      renderTableData(tbody, tabType, serverData);
+      // Simpan data lengkap iuran untuk fitur filter & cetak PDF
+      if (tabType === 'IURAN') {
+        window.__iuranDataFull = serverData;
+        if (typeof applyIuranFilter === 'function') {
+          applyIuranFilter();
+        } else {
+          renderTableData(tbody, tabType, serverData);
+        }
+        if (typeof populateIuranNamaOptions === 'function') populateIuranNamaOptions();
+      } else {
+        // RENDER LANGSUNG dari server, TANPA merge cache atau deduplikasi
+        renderTableData(tbody, tabType, serverData);
+      }
       
     } else {
       console.warn(`No ${tabType} data found`);
@@ -2689,6 +2717,180 @@ loadHistory('JADWAL');
       } finally {
         selectElement.disabled = false;
       }
+    }
+
+    // ============================================================
+    // Filter Nama Warga + Cetak Laporan PDF (Tab REKAPITULASI_IURAN)
+    // Tersedia tanpa perlu login.
+    // ============================================================
+    window.__iuranDataFull = window.__iuranDataFull || [];
+
+    const IURAN_BULAN_NAMES = [
+      'Okt 2025','Nov 2025','Des 2025',
+      'Jan 2026','Feb 2026','Mar 2026','Apr 2026','Mei 2026','Jun 2026',
+      'Jul 2026','Agu 2026','Sep 2026','Okt 2026','Nov 2026','Des 2026',
+      'Jan 2027','Feb 2027','Mar 2027','Apr 2027','Mei 2027','Jun 2027',
+      'Jul 2027','Agu 2027','Sep 2027','Okt 2027','Nov 2027','Des 2027',
+      'Jan 2028','Feb 2028','Mar 2028','Apr 2028','Mei 2028','Jun 2028',
+      'Jul 2028','Agu 2028','Sep 2028','Okt 2028','Nov 2028','Des 2028',
+      'Jan 2029','Feb 2029','Mar 2029','Apr 2029','Mei 2029','Jun 2029',
+      'Jul 2029','Agu 2029','Sep 2029','Okt 2029','Nov 2029','Des 2029',
+      'Jan 2030','Feb 2030','Mar 2030','Apr 2030','Mei 2030','Jun 2030',
+      'Jul 2030','Agu 2030','Sep 2030'
+    ];
+
+    function iuranBulanText(bulanDibayar) {
+      if (!bulanDibayar) return '-';
+      let arr = bulanDibayar;
+      if (typeof arr === 'string') {
+        try { arr = JSON.parse(arr); } catch(e) { return String(bulanDibayar); }
+      }
+      if (!Array.isArray(arr)) return String(bulanDibayar);
+      return arr.map(col => IURAN_BULAN_NAMES[col - 5] || col).join(', ');
+    }
+
+    function getFilteredIuran() {
+      const q = (document.getElementById('filter-nama-iuran')?.value || '').trim().toLowerCase();
+      const all = Array.isArray(window.__iuranDataFull) ? window.__iuranDataFull : [];
+      if (!q) return all;
+      return all.filter(it => String(it.namaWarga || '').toLowerCase().includes(q));
+    }
+
+    function applyIuranFilter() {
+      const tbody = document.getElementById('table-iuran');
+      if (!tbody) return;
+      const rows = getFilteredIuran();
+      if (rows.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="px-6 py-8 text-center text-gray-500">Tidak ada data yang cocok dengan filter.</td></tr>';
+      } else {
+        renderTableData(tbody, 'IURAN', rows);
+      }
+      const info = document.getElementById('info-filter-iuran');
+      if (info) {
+        const total = rows.reduce((s, it) => s + (Number(it.totalPembayaran) || 0), 0);
+        const q = (document.getElementById('filter-nama-iuran')?.value || '').trim();
+        const label = q ? `Filter: "${q}"` : 'Menampilkan seluruh data pembayaran';
+        info.textContent = `${label} — ${rows.length} baris, Total: ${formatRupiah(total)}`;
+      }
+    }
+
+    function populateIuranNamaOptions() {
+      const dl = document.getElementById('datalist-nama-iuran');
+      if (!dl) return;
+      const all = Array.isArray(window.__iuranDataFull) ? window.__iuranDataFull : [];
+      const names = Array.from(new Set(all.map(it => String(it.namaWarga || '').trim()).filter(Boolean))).sort((a,b) => a.localeCompare(b));
+      dl.innerHTML = names.map(n => `<option value="${n.replace(/"/g,'&quot;')}"></option>`).join('');
+    }
+
+    function cetakLaporanIuran() {
+      const rows = getFilteredIuran();
+      const q = (document.getElementById('filter-nama-iuran')?.value || '').trim();
+      const total = rows.reduce((s, it) => s + (Number(it.totalPembayaran) || 0), 0);
+      const now = new Date();
+      const tglCetak = now.toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' });
+
+      const escapeHtml = (s) => String(s == null ? '' : s)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+      const bodyRows = rows.map((it, i) => `
+        <tr>
+          <td>${i + 1}</td>
+          <td>${escapeHtml(it.noKK || '-')}</td>
+          <td>${escapeHtml(it.namaWarga || '-')}</td>
+          <td>${escapeHtml(it.alamat || '-')}</td>
+          <td>${escapeHtml(iuranBulanText(it.bulanDibayar))}</td>
+          <td style="text-align:center">${escapeHtml(it.jumlahBulan || '-')}</td>
+          <td style="text-align:right">${it.totalPembayaran ? escapeHtml(formatRupiah(it.totalPembayaran)) : '-'}</td>
+          <td>${escapeHtml(it.timestamp || '-')}</td>
+        </tr>
+      `).join('');
+
+      const html = `<!doctype html><html lang="id"><head><meta charset="utf-8">
+        <title>Laporan Rekapitulasi Pembayaran Iuran</title>
+        <style>
+          * { box-sizing: border-box; }
+          body { font-family: Arial, Helvetica, sans-serif; color:#111; margin:24px; }
+          h1 { font-size: 18px; margin: 0 0 4px; }
+          .meta { font-size: 12px; color:#333; margin-bottom: 16px; }
+          .meta div { margin: 2px 0; }
+          table { width:100%; border-collapse: collapse; font-size: 11px; }
+          th, td { border: 1px solid #333; padding: 6px 8px; vertical-align: top; }
+          th { background: #eee; text-align: left; }
+          tfoot td { font-weight: bold; background:#f5f5f5; }
+          .right { text-align:right; }
+          .no-data { text-align:center; padding: 24px; color:#666; }
+          @media print { body { margin: 12mm; } .noprint { display:none; } }
+        </style></head><body>
+        <h1>Laporan Rekapitulasi Pembayaran Iuran</h1>
+        <div class="meta">
+          <div><strong>Tanggal Cetak:</strong> ${escapeHtml(tglCetak)}</div>
+          <div><strong>Filter Nama:</strong> ${q ? escapeHtml(q) : '(Semua warga)'}</div>
+          <div><strong>Jumlah Baris:</strong> ${rows.length}</div>
+        </div>
+        ${rows.length === 0 ? '<div class="no-data">Tidak ada data pembayaran untuk dicetak.</div>' : `
+        <table>
+          <thead>
+            <tr>
+              <th style="width:32px">No</th>
+              <th>No KK</th>
+              <th>Nama Warga</th>
+              <th>Alamat</th>
+              <th>Bulan Dibayar</th>
+              <th style="width:60px">Jml Bln</th>
+              <th style="width:110px" class="right">Total</th>
+              <th>Waktu Input</th>
+            </tr>
+          </thead>
+          <tbody>${bodyRows}</tbody>
+          <tfoot>
+            <tr>
+              <td colspan="6" class="right">TOTAL KESELURUHAN</td>
+              <td class="right">${escapeHtml(formatRupiah(total))}</td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>`}
+        <div class="noprint" style="margin-top:16px;text-align:center">
+          <button onclick="window.print()" style="padding:8px 16px;font-size:13px;cursor:pointer">🖨️ Cetak / Simpan sebagai PDF</button>
+        </div>
+        <script>window.addEventListener('load', function(){ setTimeout(function(){ window.print(); }, 300); });<\/script>
+      </body></html>`;
+
+      const w = window.open('', '_blank');
+      if (!w) { alert('Popup diblokir. Izinkan popup untuk mencetak laporan.'); return; }
+      w.document.open();
+      w.document.write(html);
+      w.document.close();
+    }
+
+    function initIuranToolbar() {
+      const input = document.getElementById('filter-nama-iuran');
+      const btnReset = document.getElementById('btn-reset-filter-iuran');
+      const btnCetak = document.getElementById('btn-cetak-iuran');
+      if (input && !input.__wired) {
+        input.__wired = true;
+        input.addEventListener('input', applyIuranFilter);
+        input.addEventListener('change', applyIuranFilter);
+      }
+      if (btnReset && !btnReset.__wired) {
+        btnReset.__wired = true;
+        btnReset.addEventListener('click', () => {
+          if (input) input.value = '';
+          applyIuranFilter();
+        });
+      }
+      if (btnCetak && !btnCetak.__wired) {
+        btnCetak.__wired = true;
+        btnCetak.addEventListener('click', cetakLaporanIuran);
+      }
+      populateIuranNamaOptions();
+      applyIuranFilter();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initIuranToolbar);
+    } else {
+      initIuranToolbar();
     }
   </script>
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b44b4df02afe9cd',t:'MTc2Njc5NTM5Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
