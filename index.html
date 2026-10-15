@@ -579,7 +579,12 @@
       </div><!-- Table History -->
       <div class="card overflow-hidden">
        <div class="p-6 border-b border-gray-200">
-        <h2 class="text-xl font-bold text-gray-800">Riwayat Data Warga</h2>
+        <div style="display:flex;align-items:center;gap:10px;">
+         <h2 class="text-xl font-bold text-gray-800">Riwayat Data Warga</h2>
+         <button type="button" id="btn-refresh-warga" onclick="manualRefreshWarga()" title="Refresh data" aria-label="Refresh data" style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:9999px;border:1px solid #d1d5db;background:#fff;cursor:pointer;">
+          <svg id="icon-refresh-warga" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+         </button>
+        </div>
        </div>
        <div class="overflow-x-auto">
         <table class="w-full">
@@ -607,7 +612,12 @@
       </div>
       <div class="card overflow-hidden">
        <div class="p-6 border-b border-gray-200">
-        <h2 class="text-xl font-bold text-gray-800">Riwayat Kegiatan</h2>
+        <div style="display:flex;align-items:center;gap:10px;">
+         <h2 class="text-xl font-bold text-gray-800">Riwayat Kegiatan</h2>
+         <button type="button" id="btn-refresh-kegiatan" onclick="manualRefreshKegiatan()" title="Refresh data" aria-label="Refresh data" style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:9999px;border:1px solid #d1d5db;background:#fff;cursor:pointer;">
+          <svg id="icon-refresh-kegiatan" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+         </button>
+        </div>
        </div>
        <div class="overflow-x-auto">
         <table class="w-full">
@@ -666,7 +676,12 @@
       </div>
       <div class="card overflow-hidden">
        <div class="p-6 border-b border-gray-200">
-        <h2 class="text-xl font-bold text-gray-800">Riwayat Transaksi Kas</h2>
+        <div style="display:flex;align-items:center;gap:10px;">
+         <h2 class="text-xl font-bold text-gray-800">Riwayat Transaksi Kas</h2>
+         <button type="button" id="btn-refresh-kas" onclick="manualRefreshKas()" title="Refresh data" aria-label="Refresh data" style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:9999px;border:1px solid #d1d5db;background:#fff;cursor:pointer;">
+          <svg id="icon-refresh-kas" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+         </button>
+        </div>
        </div>
 
        <div class="overflow-x-auto">
@@ -731,8 +746,9 @@
          </div>
          <p id="info-filter-iuran" class="text-xs text-gray-500 mt-1">Menampilkan seluruh data pembayaran.</p>
         </div>
-        <div>
+        <div class="flex flex-wrap gap-2">
          <button type="button" id="btn-cetak-iuran" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow"> 🖨️ Cetak Laporan PDF </button>
+         <button type="button" id="btn-cetak-card-tagihan" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow"> 🖨️ Cetak Card Tagihan </button>
         </div>
        </div>
       </div>
@@ -784,7 +800,12 @@
       </div>
       <div class="card overflow-hidden">
        <div class="p-6 border-b border-gray-200">
-        <h2 class="text-xl font-bold text-gray-800">Riwayat Data Aset</h2>
+        <div style="display:flex;align-items:center;gap:10px;">
+         <h2 class="text-xl font-bold text-gray-800">Riwayat Data Aset</h2>
+         <button type="button" id="btn-refresh-aset" onclick="manualRefreshAset()" title="Refresh data" aria-label="Refresh data" style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:9999px;border:1px solid #d1d5db;background:#fff;cursor:pointer;">
+          <svg id="icon-refresh-aset" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+         </button>
+        </div>
        </div>
        <div class="overflow-x-auto">
         <table class="w-full">
@@ -827,7 +848,12 @@
       </div>
       <div class="card overflow-hidden">
        <div class="p-6 border-b border-gray-200">
-        <h2 class="text-xl font-bold text-gray-800">Riwayat Jadwal Kegiatan</h2>
+        <div style="display:flex;align-items:center;gap:10px;">
+         <h2 class="text-xl font-bold text-gray-800">Riwayat Jadwal Kegiatan</h2>
+         <button type="button" id="btn-refresh-jadwal" onclick="manualRefreshJadwal()" title="Refresh data" aria-label="Refresh data" style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:9999px;border:1px solid #d1d5db;background:#fff;cursor:pointer;">
+          <svg id="icon-refresh-jadwal" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+         </button>
+        </div>
        </div>
        <div class="overflow-x-auto">
         <table class="w-full">
@@ -1083,6 +1109,9 @@
     let wargaListFull = [];
     let pembayaranData = {};
     let selectedWargaData = null;
+    let isIuranPaymentDataReady = false;
+    let isLoadingWargaForIuran = false;
+    let iuranModalLoadId = 0;
     let adminData = [];
     let currentAdmin = null;
     
@@ -1491,7 +1520,7 @@ function preloadAllTabs() {
       document.getElementById('btn-input-kas').addEventListener('click', () => openModal('modal-kas'));
       document.getElementById('btn-input-iuran').addEventListener('click', () => {
         openModal('modal-iuran');
-        loadWargaForIuran();
+        void loadWargaForIuran();
       });
       document.getElementById('btn-input-aset').addEventListener('click', () => openModal('modal-aset'));
       document.getElementById('btn-input-jadwal').addEventListener('click', () => openModal('modal-jadwal'));
@@ -1837,12 +1866,49 @@ loadHistory('KAS');
         return;
       }
       
+      if (!isIuranPaymentDataReady || isLoadingWargaForIuran) {
+        showToast('Status pembayaran belum siap. Coba lagi setelah data selesai dimuat.', 'error');
+        setLoadingState(submitBtn, false);
+        return;
+      }
+
+      const selectedNoKK = selectedWargaData.noKK;
       const checkedBoxes = document.querySelectorAll('#checkbox-bulan input:checked:not(:disabled)');
-      const bulanDibayar = Array.from(checkedBoxes).map(cb => parseInt(cb.value));
+      const bulanDibayar = Array.from(checkedBoxes).map(cb => parseInt(cb.value, 10));
       
       if (bulanDibayar.length === 0) {
         showToast('Pilih minimal 1 bulan!', 'error');
         setLoadingState(submitBtn, false);
+        return;
+      }
+
+      const searchInput = document.getElementById('m_cariWarga');
+      const monthCheckboxes = document.querySelectorAll('#checkbox-bulan input[type="checkbox"]');
+      if (searchInput) searchInput.disabled = true;
+      monthCheckboxes.forEach(checkbox => { checkbox.disabled = true; });
+
+      try {
+        const latestPayments = await fetchPembayaranRekap();
+        if (!selectedWargaData || selectedWargaData.noKK !== selectedNoKK) {
+          throw new Error('Warga yang dipilih berubah saat memeriksa status pembayaran.');
+        }
+        pembayaranData = latestPayments;
+        const paidMonths = pembayaranData[selectedNoKK] || [];
+        const alreadyPaid = bulanDibayar.filter(month => paidMonths.includes(month));
+        if (alreadyPaid.length > 0) {
+          updateCheckboxBulan(selectedNoKK);
+          showToast('Ada bulan yang baru saja tercatat lunas. Periksa pilihan bulan dan coba lagi.', 'error');
+          setLoadingState(submitBtn, false);
+          if (searchInput) searchInput.disabled = false;
+          return;
+        }
+      } catch (error) {
+        console.error('Gagal memverifikasi status pembayaran terbaru:', error);
+        isIuranPaymentDataReady = false;
+        updateCheckboxBulan(selectedNoKK);
+        showToast('Status pembayaran gagal diverifikasi. Tidak ada pembayaran yang dikirim; silakan coba lagi.', 'error');
+        setLoadingState(submitBtn, false);
+        if (searchInput) searchInput.disabled = false;
         return;
       }
       
@@ -1911,11 +1977,41 @@ loadHistory('KAS');
     }
 
     async function manualRefreshIuran() {
-      const btn = document.getElementById('btn-refresh-iuran');
-      const icon = document.getElementById('icon-refresh-iuran');
+      return runManualRefresh('btn-refresh-iuran', 'icon-refresh-iuran', () => loadHistory('IURAN'));
+    }
+
+    async function manualRefreshWarga() {
+      return runManualRefresh('btn-refresh-warga', 'icon-refresh-warga', async () => {
+        await Promise.all([loadDataWarga(), loadSummaryCards()]);
+      });
+    }
+
+    async function manualRefreshKegiatan() {
+      return runManualRefresh('btn-refresh-kegiatan', 'icon-refresh-kegiatan', () => loadHistory('KEGIATAN'));
+    }
+
+    async function manualRefreshKas() {
+      return runManualRefresh('btn-refresh-kas', 'icon-refresh-kas', () => loadHistory('KAS'));
+    }
+
+    async function manualRefreshAset() {
+      return runManualRefresh('btn-refresh-aset', 'icon-refresh-aset', async () => {
+        await Promise.all([loadHistory('ASET'), loadTotalAset()]);
+      });
+    }
+
+    async function manualRefreshJadwal() {
+      return runManualRefresh('btn-refresh-jadwal', 'icon-refresh-jadwal', async () => {
+        await Promise.all([loadHistory('JADWAL'), loadJadwalAktif()]);
+      });
+    }
+
+    async function runManualRefresh(buttonId, iconId, refresh) {
+      const btn = document.getElementById(buttonId);
+      const icon = document.getElementById(iconId);
       if (btn) btn.disabled = true;
       if (icon) icon.classList.add('animate-spin');
-      try { await loadHistory('IURAN'); } finally {
+      try { await refresh(); } finally {
         if (btn) btn.disabled = false;
         if (icon) icon.classList.remove('animate-spin');
       }
@@ -2425,80 +2521,110 @@ loadHistory('JADWAL');
       }
     }
     
-    // Load Warga for Iuran Modal
-    let isLoadingPembayaranData = false; // Flag untuk tracking loading state
-    
+    // Load warga dan status pembayaran bersamaan; pilihan bulan menunggu data pembayaran.
+    async function fetchWargaRekap() {
+      const response = await fetch(
+        `${SCRIPT_URL}?action=getHistory&tabType=WARGA&t=${Date.now()}`,
+        { cache: 'no-store' }
+      );
+      const result = await response.json();
+      if (!result.success || !Array.isArray(result.data)) {
+        throw new Error('Data warga tidak tersedia.');
+      }
+      return result.data;
+    }
+
+    async function fetchPembayaranRekap() {
+      const response = await fetch(
+        `${SCRIPT_URL}?action=getAllPembayaranRekap&t=${Date.now()}`,
+        { cache: 'no-store' }
+      );
+      const result = await response.json();
+      if (!result.success || !Array.isArray(result.data)) {
+        throw new Error('Status pembayaran tidak tersedia.');
+      }
+      const latestPayments = {};
+      result.data.forEach(item => {
+        if (item.noKK) {
+          const rawMonths = item.bulanTerbayar;
+          const months = Array.isArray(rawMonths)
+            ? rawMonths
+            : typeof rawMonths === 'string'
+              ? rawMonths.split(',').map(month => month.trim()).filter(Boolean)
+              : rawMonths == null ? [] : null;
+          if (!months) throw new Error('Format status pembayaran tidak valid.');
+          const numericMonths = months.map(Number);
+          if (numericMonths.some(month => !Number.isInteger(month))) {
+            throw new Error('Daftar bulan pembayaran tidak valid.');
+          }
+          latestPayments[item.noKK] = numericMonths;
+        }
+      });
+      return latestPayments;
+    }
+
     async function loadWargaForIuran() {
+      const loadId = ++iuranModalLoadId;
       const searchInput = document.getElementById('m_cariWarga');
       searchInput.value = '';
+      searchInput.disabled = wargaListFull.length === 0;
+      searchInput.placeholder = wargaListFull.length ? 'Ketik nama / no KK / alamat' : '⏳ Memuat data warga...';
       selectedWargaData = null;
-      isLoadingPembayaranData = true; // Set flag loading
-      
-      // Disable search input sementara
-      searchInput.disabled = true;
-      searchInput.placeholder = '⏳ Memuat data pembayaran...';
-      
-      try {
-        // Gunakan tabType WARGA yang sesuai dengan Apps Script
-        const response = await fetch(
-  `${SCRIPT_URL}?action=getHistory&tabType=WARGA&t=${Date.now()}`,
-  { cache: 'no-store' }
-);
-        const result = await response.json();
-        
-        console.log('Load warga response:', result);
-        
-        if (result.success && result.data && result.data.length > 0) {
-          wargaListFull = result.data;
+      isIuranPaymentDataReady = false;
+      isLoadingWargaForIuran = true;
+      pembayaranData = {};
+      generateCheckboxBulan();
+      updateCheckboxBulan(null);
+      document.getElementById('autocomplete-list').style.display = 'none';
+
+      const wargaPromise = (async () => {
+        if (wargaListFull.length > 0) return;
+        try {
+          const wargaData = await fetchWargaRekap();
+          if (loadId !== iuranModalLoadId) return;
+          wargaListFull = wargaData;
+          searchInput.disabled = false;
+          searchInput.placeholder = 'Ketik nama / no KK / alamat';
           console.log('✅ Warga loaded successfully:', wargaListFull.length, 'records');
-          console.log('Sample warga data:', wargaListFull[0]);
-          
-          // Load pembayaran data (CRITICAL: Must complete before user interaction)
-          const responsePembayaran = await fetch(
-  `${SCRIPT_URL}?action=getAllPembayaranRekap&t=${Date.now()}`,
-  { cache: 'no-store' }
-);
-          const resultPembayaran = await responsePembayaran.json();
-          
-          if (resultPembayaran.success) {
-            pembayaranData = {};
-            resultPembayaran.data.forEach(item => {
-              pembayaranData[item.noKK] = item.bulanTerbayar || [];
-            });
-            console.log('✅ Pembayaran data loaded:', Object.keys(pembayaranData).length, 'warga');
-          }
-          
-          generateCheckboxBulan();
-          updateCheckboxBulan(null);
-          
-          // Enable search input setelah data selesai load
-          searchInput.disabled = false;
-          searchInput.placeholder = 'Ketik nama / no KK / alamat';
-          isLoadingPembayaranData = false; // Clear loading flag
-        } else {
-          console.error('❌ No warga data found or empty result');
-          console.error('Result:', result);
-          showToast('Data warga tidak ditemukan. Pastikan sudah ada data warga.', 'error');
-          searchInput.disabled = false;
-          searchInput.placeholder = 'Ketik nama / no KK / alamat';
-          isLoadingPembayaranData = false;
+        } catch (error) {
+          if (loadId !== iuranModalLoadId) return;
+          searchInput.disabled = true;
+          searchInput.placeholder = 'Data warga gagal dimuat';
+          showToast('Data warga gagal dimuat: ' + error.message, 'error');
+          throw error;
         }
-      } catch (error) {
-        console.error('❌ Error loading warga:', error);
-        showToast('Error loading warga: ' + error.message, 'error');
+      })();
+
+      if (wargaListFull.length > 0) {
         searchInput.disabled = false;
-        searchInput.placeholder = 'Ketik nama / no KK / alamat';
-        isLoadingPembayaranData = false;
+      }
+
+      const pembayaranPromise = (async () => {
+        try {
+          const latestPayments = await fetchPembayaranRekap();
+          if (loadId !== iuranModalLoadId) return;
+          pembayaranData = latestPayments;
+          isIuranPaymentDataReady = true;
+          isLoadingWargaForIuran = false;
+          updateCheckboxBulan(selectedWargaData ? selectedWargaData.noKK : null);
+          console.log('✅ Pembayaran data loaded:', Object.keys(pembayaranData).length, 'warga');
+        } catch (error) {
+          if (loadId !== iuranModalLoadId) return;
+          isIuranPaymentDataReady = false;
+          isLoadingWargaForIuran = false;
+          updateCheckboxBulan(null);
+          showToast('Status pembayaran gagal dimuat. Pilihan bulan tetap dikunci: ' + error.message, 'error');
+          throw error;
+        }
+      })();
+
+      const results = await Promise.allSettled([wargaPromise, pembayaranPromise]);
+      if (loadId === iuranModalLoadId && results.some(result => result.status === 'rejected')) {
+        isLoadingWargaForIuran = false;
       }
     }
     
     function selectWarga(warga) {
-      // Cek apakah data pembayaran masih loading
-      if (isLoadingPembayaranData) {
-        showToast('⏳ Mohon tunggu, data pembayaran sedang dimuat...', 'error');
-        return;
-      }
-      
       selectedWargaData = warga;
       document.getElementById('m_cariWarga').value = warga.nama;
       document.getElementById('autocomplete-list').style.display = 'none';
@@ -2547,52 +2673,30 @@ loadHistory('JADWAL');
       }).join('');
     }
     
-    let updateCheckboxTimeout = null; // Debounce timer
-    
     function updateCheckboxBulan(noKK) {
-      // Clear any pending updates
-      if (updateCheckboxTimeout) {
-        clearTimeout(updateCheckboxTimeout);
-      }
-      
-      // Debounce untuk prevent multiple rapid calls
-      updateCheckboxTimeout = setTimeout(() => {
-        const labels = document.querySelectorAll('#checkbox-bulan .iuran-month');
-        const terbayar = noKK ? (pembayaranData[noKK] || []) : [];
-        
-        console.log('✅ updateCheckboxBulan called with noKK:', noKK);
-        console.log('📊 Bulan terbayar:', terbayar);
-        console.log('🔍 pembayaranData[noKK]:', pembayaranData[noKK]);
-        
-        labels.forEach(label => {
-          const checkbox = label.querySelector('input[type="checkbox"]');
-          const colIndex = parseInt(checkbox.value);
-          
-          // Reset semua classes dulu
-          label.classList.remove('month-belum', 'month-bayar', 'month-lunas');
-          checkbox.checked = false;
-          
-          if (terbayar.includes(colIndex)) {
-            // Bulan sudah lunas - merah, disabled, checked
-            checkbox.checked = true;
-            checkbox.disabled = true;
-            label.classList.add('month-lunas');
-            console.log(`🔴 Bulan ${colIndex} LUNAS (disabled)`);
-          } else if (noKK) {
-            // Ada warga terpilih, bulan belum bayar - warna per tahun, bisa diklik
-            checkbox.disabled = false;
-            label.classList.add('month-belum');
-            console.log(`✅ Bulan ${colIndex} AVAILABLE (enabled)`);
-          } else {
-            // Tidak ada warga terpilih - warna per tahun, disabled
-            checkbox.disabled = true;
-            label.classList.add('month-belum');
-            console.log(`⚪ Bulan ${colIndex} NO WARGA (disabled)`);
-          }
-        });
-        
-        updateTotal();
-      }, 100); // Delay 100ms untuk stability
+      const labels = document.querySelectorAll('#checkbox-bulan .iuran-month');
+      const terbayar = noKK && isIuranPaymentDataReady ? (pembayaranData[noKK] || []) : [];
+
+      labels.forEach(label => {
+        const checkbox = label.querySelector('input[type="checkbox"]');
+        const colIndex = parseInt(checkbox.value, 10);
+        label.classList.remove('month-belum', 'month-bayar', 'month-lunas');
+        checkbox.checked = false;
+
+        if (!isIuranPaymentDataReady || !noKK || isLoadingWargaForIuran) {
+          checkbox.disabled = true;
+          label.classList.add('month-belum');
+        } else if (terbayar.includes(colIndex)) {
+          checkbox.checked = true;
+          checkbox.disabled = true;
+          label.classList.add('month-lunas');
+        } else {
+          checkbox.disabled = false;
+          label.classList.add('month-belum');
+        }
+      });
+
+      updateTotal();
     }
     
     function updateTotal() {
@@ -2877,37 +2981,42 @@ loadHistory('JADWAL');
       dl.innerHTML = names.map(n => `<option value="${n.replace(/"/g,'&quot;')}"></option>`).join('');
     }
 
-    // Cetak laporan tanpa popup: pakai iframe tersembunyi (aman di preview & HP)
+    // Open the report from the click handler so embedded browsers can allow printing.
     function printLaporanHtml(html) {
+      let printWindow;
       try {
-        const old = document.getElementById('print-frame-laporan');
-        if (old) old.remove();
-        const iframe = document.createElement('iframe');
-        iframe.id = 'print-frame-laporan';
-        iframe.setAttribute('aria-hidden', 'true');
-        iframe.style.position = 'fixed';
-        iframe.style.right = '0';
-        iframe.style.bottom = '0';
-        iframe.style.width = '0';
-        iframe.style.height = '0';
-        iframe.style.border = '0';
-        document.body.appendChild(iframe);
-        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        printWindow = window.open('', '_blank');
+      } catch (error) {
+        console.error('Gagal membuka jendela cetak:', error);
+      }
+
+      if (!printWindow) {
+        alert('Jendela cetak diblokir. Izinkan pop-up untuk situs ini, lalu coba cetak kembali.');
+        return;
+      }
+
+      try {
+        const doc = printWindow.document;
         doc.open();
         doc.write(html);
         doc.close();
-        setTimeout(function () {
+        const triggerPrint = () => {
           try {
-            iframe.contentWindow.focus();
-            iframe.contentWindow.print();
-          } catch (err) {
-            console.error('Print gagal:', err);
-            alert('Tidak bisa membuka dialog cetak di perangkat ini.');
+            printWindow.focus();
+            printWindow.print();
+          } catch (error) {
+            console.error('Print gagal:', error);
+            alert('Tidak bisa membuka dialog cetak. Gunakan tombol cetak pada jendela laporan.');
           }
-        }, 400);
-      } catch (e) {
-        console.error('printLaporanHtml error:', e);
-        alert('Gagal menyiapkan laporan untuk dicetak.');
+        };
+        if (doc.readyState === 'complete') {
+          setTimeout(triggerPrint, 100);
+        } else {
+          printWindow.addEventListener('load', () => setTimeout(triggerPrint, 100), { once: true });
+        }
+      } catch (error) {
+        console.error('Gagal menyiapkan laporan untuk dicetak:', error);
+        alert('Gagal menyiapkan laporan. Pastikan pop-up diizinkan untuk situs ini.');
       }
     }
 
@@ -2960,6 +3069,131 @@ loadHistory('JADWAL');
       });
     }
 
+    function buildIuranSummary(rows, bulanSekarangIdx) {
+      const bulanLabelDariIdx = (idx) => IURAN_BULAN_SHORT[idx % 12] + ' ' + Math.floor(idx / 12);
+      const bulanKeIdx = (label) => {
+        const match = /^([A-Za-z]{3})\s+(\d{4})$/.exec(String(label || '').trim());
+        if (!match) return -1;
+        const month = IURAN_BULAN_SHORT.findIndex(name => name.toLowerCase() === match[1].toLowerCase());
+        return month < 0 ? -1 : Number(match[2]) * 12 + month;
+      };
+      const groups = new Map();
+      rows.forEach(raw => {
+        const item = normalizeIuranItem(raw);
+        const namaKey = String(item.namaWarga || '').trim().toLowerCase().replace(/\s+/g, ' ');
+        const key = namaKey || String(item.noKK || '').trim().toLowerCase();
+        if (!groups.has(key)) groups.set(key, {
+          noKK: item.noKK,
+          namaWarga: item.namaWarga,
+          alamat: item.alamat,
+          bulanIdx: new Set()
+        });
+        const group = groups.get(key);
+        if ((!group.noKK || group.noKK === '-') && item.noKK !== '-') group.noKK = item.noKK;
+        if (item.alamat && item.alamat !== '-') group.alamat = item.alamat;
+        iuranBulanList(item.bulanText).forEach(label => {
+          const idx = bulanKeIdx(label);
+          if (idx >= 0) group.bulanIdx.add(idx);
+        });
+      });
+
+      return Array.from(groups.values()).map(group => {
+        const paid = Array.from(group.bulanIdx).sort((a, b) => a - b);
+        const terakhirIdx = paid.length ? paid[paid.length - 1] : -1;
+        const belum = [];
+        if (terakhirIdx >= 0 && terakhirIdx < bulanSekarangIdx) {
+          for (let idx = terakhirIdx + 1; idx <= bulanSekarangIdx; idx++) {
+            belum.push(bulanLabelDariIdx(idx));
+          }
+        }
+        const selisihBulan = terakhirIdx < 0 ? 0 : terakhirIdx - bulanSekarangIdx;
+        return {
+          ...group,
+          terakhirIdx,
+          terakhir: terakhirIdx >= 0 ? bulanLabelDariIdx(terakhirIdx) : '-',
+          belum,
+          saldo: selisihBulan * IURAN_TARIF_PER_BULAN
+        };
+      }).sort((a, b) => {
+        const alamatKey = (alamat) => String(alamat || '').trim().toLowerCase().replace(/\s+/g, ' ');
+        return a.saldo - b.saldo
+          || alamatKey(a.alamat).localeCompare(alamatKey(b.alamat), 'id', { numeric: true })
+          || String(a.namaWarga).localeCompare(String(b.namaWarga), 'id');
+      });
+    }
+
+    function cetakCardTagihanIuran() {
+      const escapeHtml = (s) => String(s == null ? '' : s)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      const now = new Date();
+      const wibNow = new Date(now.getTime() + 7 * 3600 * 1000);
+      const bulanSekarangIdx = wibNow.getUTCFullYear() * 12 + wibNow.getUTCMonth();
+      const rows = sortByTanggalAsc(getFilteredIuran(), it => parseTanggal(it.timestamp));
+      const cards = buildIuranSummary(rows, bulanSekarangIdx)
+        .filter(item => item.belum.length > 0)
+        .map(item => ({ ...item, totalKekurangan: item.belum.length * IURAN_TARIF_PER_BULAN }));
+
+      if (!cards.length) {
+        showToast('Tidak ada warga dengan kekurangan iuran untuk dicetak.', 'success');
+        return;
+      }
+
+      const tanggalCetak = now.toLocaleString('id-ID', {
+        dateStyle: 'full',
+        timeStyle: 'short',
+        timeZone: 'Asia/Jakarta'
+      });
+      const cardHtml = cards.map(item => `
+        <article class="tagihan-card">
+          <header class="card-header">
+            <strong>RT. 1 / VIII Kel. Padangsari</strong>
+            <span class="card-title">KARTU IURAN</span>
+          </header>
+          <section class="identity">
+            <div><span class="label">Nama Kepala Keluarga</span><strong>${escapeHtml(item.namaWarga)}</strong></div>
+            <div><span class="label">No. KK</span><strong>${escapeHtml(item.noKK)}</strong></div>
+            <div class="address"><span class="label">Alamat</span><strong>${escapeHtml(item.alamat)}</strong></div>
+          </section>
+          <section class="arrears">
+            <span class="label">BULAN BELUM BAYAR</span>
+            <div class="month-list">${item.belum.map(bulan => `<span>${escapeHtml(bulan)}</span>`).join('')}</div>
+          </section>
+          <footer class="total">
+            <strong>TOTAL KEKURANGAN</strong>
+            <strong class="amount">${escapeHtml(formatRupiah(item.totalKekurangan))}</strong>
+          </footer>
+        </article>`).join('');
+      const html = `<!doctype html><html lang="id"><head><meta charset="utf-8">
+        <title>Kartu Tagihan Iuran</title>
+        <style>
+          * { box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+          @page { size:A4 portrait; margin:10mm; }
+          body { margin:0; color:#1f2937; font-family:Arial,Helvetica,sans-serif; }
+          .print-heading { margin:0 0 10px; font-size:10px; color:#6b7280; text-align:right; }
+          .card-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8mm; align-items:start; }
+          .tagihan-card { border:1.5px dashed #6b7280; padding:10px; border-radius:8px; break-inside:avoid; page-break-inside:avoid; }
+          .card-header { display:flex; align-items:center; justify-content:space-between; gap:8px; padding-bottom:8px; border-bottom:1px solid #d1d5db; font-size:11px; }
+          .card-title { flex-shrink:0; padding:5px 7px; border:2px solid #2563eb; border-radius:4px; color:#1d4ed8; font-size:12px; font-weight:800; letter-spacing:.4px; }
+          .identity { display:grid; grid-template-columns:1fr auto; gap:7px 10px; margin:10px 0; font-size:10px; }
+          .identity .address { grid-column:1 / -1; }
+          .label { display:block; margin-bottom:3px; color:#6b7280; font-size:8px; font-weight:700; letter-spacing:.35px; text-transform:uppercase; }
+          .identity strong { display:block; overflow-wrap:anywhere; }
+          .arrears { border:1px solid #fecaca; background:#fff7f7; padding:8px; border-radius:5px; }
+          .arrears .label { color:#b91c1c; }
+          .month-list { display:flex; flex-wrap:wrap; gap:4px; }
+          .month-list span { color:#b91c1c; font-size:10px; font-weight:700; }
+          .month-list span:not(:last-child)::after { content:","; }
+          .total { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:9px; padding-top:8px; border-top:1px solid #d1d5db; font-size:10px; }
+          .amount { color:#b91c1c; font-size:14px; white-space:nowrap; }
+          @media print { .print-heading { margin-bottom:8px; } }
+          @media screen and (max-width:600px) { .card-grid { grid-template-columns:1fr; } }
+        </style></head><body>
+        <p class="print-heading">Dicetak: ${escapeHtml(tanggalCetak)} | ${cards.length} kartu tagihan</p>
+        <main class="card-grid">${cardHtml}</main>
+        </body></html>`;
+      printLaporanHtml(html);
+    }
+
 
     function cetakLaporanIuran() {
       const rows = sortByTanggalAsc(getFilteredIuran(), it => parseTanggal(it.timestamp));
@@ -2974,59 +3208,9 @@ loadHistory('JADWAL');
       const wibNow = new Date(now.getTime() + 7 * 3600 * 1000);
       const bulanSekarangIdx = wibNow.getUTCFullYear() * 12 + wibNow.getUTCMonth();
       const bulanLabelDariIdx = (idx) => IURAN_BULAN_SHORT[idx % 12] + ' ' + Math.floor(idx / 12);
-      const bulanKeIdx = (label) => {
-        const m = /^([A-Za-z]{3})\s+(\d{4})$/.exec(String(label || '').trim());
-        if (!m) return -1;
-        const mi = IURAN_BULAN_SHORT.findIndex(b => b.toLowerCase() === m[1].toLowerCase());
-        return mi < 0 ? -1 : Number(m[2]) * 12 + mi;
-      };
 
       // Tanpa filter, cetak ringkasan satu baris per warga.
-      const summaryRows = (() => {
-        if (q) return [];
-        const groups = new Map();
-        rows.forEach((raw) => {
-          const it = normalizeIuranItem(raw);
-          const namaKey = String(it.namaWarga || '').trim().toLowerCase().replace(/\s+/g, ' ');
-          const key = namaKey || String(it.noKK || '').trim().toLowerCase();
-          if (!groups.has(key)) groups.set(key, {
-            noKK: it.noKK,
-            namaWarga: it.namaWarga,
-            alamat: it.alamat,
-            bulanIdx: new Set()
-          });
-          const group = groups.get(key);
-          if ((!group.noKK || group.noKK === '-') && it.noKK !== '-') group.noKK = it.noKK;
-          // Alamat mengikuti pembayaran terakhir (rows terurut lama -> baru).
-          if (it.alamat && it.alamat !== '-') group.alamat = it.alamat;
-          iuranBulanList(it.bulanText).forEach(label => {
-            const idx = bulanKeIdx(label);
-            if (idx >= 0) group.bulanIdx.add(idx);
-          });
-        });
-
-        return Array.from(groups.values()).map(group => {
-          const paid = Array.from(group.bulanIdx).sort((a, b) => a - b);
-          const terakhirIdx = paid.length ? paid[paid.length - 1] : -1;
-          const belum = [];
-          if (terakhirIdx >= 0 && terakhirIdx < bulanSekarangIdx) {
-            for (let idx = terakhirIdx + 1; idx <= bulanSekarangIdx; idx++) belum.push(bulanLabelDariIdx(idx));
-          }
-          const selisihBulan = terakhirIdx < 0 ? 0 : terakhirIdx - bulanSekarangIdx;
-          return {
-            ...group,
-            terakhirIdx,
-            terakhir: terakhirIdx >= 0 ? bulanLabelDariIdx(terakhirIdx) : '-',
-            belum,
-            saldo: selisihBulan * IURAN_TARIF_PER_BULAN
-          };
-        }).sort((a, b) => {
-          const alamatKey = (alamat) => String(alamat || '').trim().toLowerCase().replace(/\s+/g, ' ');
-          return a.saldo - b.saldo
-            || alamatKey(a.alamat).localeCompare(alamatKey(b.alamat), 'id', { numeric: true })
-            || String(a.namaWarga).localeCompare(String(b.namaWarga), 'id');
-        });
-      })();
+      const summaryRows = q ? [] : buildIuranSummary(rows, bulanSekarangIdx);
 
       const formatSaldo = (nilai) => {
         if (nilai < 0) return '- ' + formatRupiah(Math.abs(nilai));
@@ -3393,6 +3577,7 @@ loadHistory('JADWAL');
       const input = document.getElementById('filter-nama-iuran');
       const btnReset = document.getElementById('btn-reset-filter-iuran');
       const btnCetak = document.getElementById('btn-cetak-iuran');
+      const btnCetakCard = document.getElementById('btn-cetak-card-tagihan');
       if (input && !input.__wired) {
         input.__wired = true;
         input.addEventListener('input', applyIuranFilter);
@@ -3408,6 +3593,10 @@ loadHistory('JADWAL');
       if (btnCetak && !btnCetak.__wired) {
         btnCetak.__wired = true;
         btnCetak.addEventListener('click', cetakLaporanIuran);
+      }
+      if (btnCetakCard && !btnCetakCard.__wired) {
+        btnCetakCard.__wired = true;
+        btnCetakCard.addEventListener('click', cetakCardTagihanIuran);
       }
       populateIuranNamaOptions();
       applyIuranFilter();
